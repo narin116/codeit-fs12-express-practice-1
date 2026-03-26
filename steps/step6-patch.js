@@ -102,15 +102,18 @@ app.get("/api/subscriptions/:id", (req, res) => {
 //
 // 8) 응답: { success: true, message: '구독이 수정되었습니다', data: 수정된데이터 }
 app.patch("/api/subscriptions/:id", (req, res) => {
+  //1,2) id, body 꺼내오기
   const id = Number(req.params.id);
   const updates = req.body;
 
+  //3)빈 배열인지 검사하기
   if (Object.keys(updates).length === 0)
     return res.status(400).json({
       success: false,
       message: "수정할 내용이 없습니다",
     });
 
+  //4) 수정이 가능한 필드들인지 검사 (허용되지 않은 필드가 있으면 patch 불가)
   //허용되지 않은 필드 검사
   //허용되지 않은 필드가 있다면, 걔네만 모아서 배열을 만들고, 이걸로 오류메세지를 출력
   const allowFields = ["service", "price", "cycle", "startDate"];

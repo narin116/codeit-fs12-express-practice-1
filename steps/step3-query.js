@@ -123,7 +123,7 @@ app.get("/api/subscriptions", (req, res) => {
     limit,
   } = req.query;
 
-  let results = [...subscriptions]; //원본 배열 손상 방지?
+  let results = [...subscriptions]; //원본 배열 손상 방지 맞음! 뒤에서 sort로 정렬을 수행해줘야 하기 때문.
 
   // TODO 2a: service 필터링
   // service 값이 있으면 results를 필터링하세요
@@ -134,7 +134,7 @@ app.get("/api/subscriptions", (req, res) => {
       s.service.toLowerCase().includes(service.toLowerCase()),
     );
   }
-  //아래처럼 하는 게 아닌듯..그냥 가만 냅두면 전체목록이니까.. 반환이 ㄹㅇ 반환하라는게 아니라, 다음 계산시에 원래 값을 보여주라는 뜻인듯.
+  //아래처럼 하는 게 아닌듯..그냥 가만 냅두면 전체목록이니까.. 쿼리 없을 때 반환이 진짜!!!로 쿼리가 아무것도 없을 때 반환ㅠㅠ
   //else {
   //   //쿼리가 없으면 전체 목록을 반환. (얘가 필수 쿼리 인가봄)
   //   res.json(subscriptions); //반환이 진짜 이 반환이 맞나? ;;

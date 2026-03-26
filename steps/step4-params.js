@@ -74,17 +74,20 @@ app.get("/api/subscriptions", (req, res) => {
 //   http://localhost:8080/api/subscriptions/-1   → 400
 app.get("/api/subscriptions/:id", (req, res) => {
   const id = Number(req.params.id);
+  //id가 NaN이 아닌지 검사
   if (isNaN(id)) {
     //isNaN : NaN이면 true, 아니면 false
     return res
       .status(400)
       .json({ success: false, message: "ID는 숫자여야 합니다" });
   }
+  //id가 양수인지 검사
   if (id < 0) {
     return res
       .status(400)
       .json({ success: false, message: "ID는 양수여야 합니다" });
   }
+  //해당 id의 구독정보 가져오기
   const subscription = subscriptions.find((sub) => sub.id === id); //id는 단 1개니까 find로 찾아도 괜찮다.(인듯)
   if (subscription) {
     return res.json({ success: true, data: subscription });
